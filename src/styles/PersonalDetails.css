@@ -14,7 +14,7 @@
   transform: translate(-50%, -50%);
   z-index: 1000;
   max-height: 90vh;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 /* Ensure form stands out from background */
@@ -24,8 +24,9 @@ body {
 
 .form-header {
   text-align: center;
-  margin-bottom: 30px;
-  padding-bottom: 15px;
+  margin:30px 0 0 0;
+  margin-bottom: -30px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
 
@@ -34,6 +35,8 @@ body {
   margin: 0;
   font-size: 24px;
   font-weight: 500;
+ 
+  padding-bottom: 15px;
 }
 
 /* Required field indicator */
@@ -70,6 +73,7 @@ body {
   color: white;
   cursor: pointer;
   border: 1px solid transparent;
+  margin-left: 90%;
 }
 
 .btn-primary {
