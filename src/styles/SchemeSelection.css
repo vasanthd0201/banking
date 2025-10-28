@@ -21,6 +21,8 @@
   display: flex;
   flex-direction: column;
   gap: 28px;
+  margin-left: 270px;
+  margin-top: 30px;
 }
 
 .screen4-step {
