@@ -156,7 +156,7 @@ function Contactdetails({ mobile = '+91 98XXXXXX01', email = 'user@example.com',
   };
 
   const handleBack = () => {
-    navigate('/register');
+    navigate('/personal-details');
   };
 
   return (
