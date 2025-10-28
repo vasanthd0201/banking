@@ -72,7 +72,6 @@ export default function NomineeDetails() {
       return;
     }
 
-    // find the missing nominee ID (1–3)
     const existingIds = nominees.map((n) => n.id);
     const availableIds = [1, 2, 3];
     const newId = availableIds.find((id) => !existingIds.includes(id));
@@ -106,45 +105,35 @@ export default function NomineeDetails() {
 
   const handleSwitchNominee = (index) => setCurrentNomineeIndex(index);
 
-  // Validate all fields and total share = 100%
+  // Validation
   const validateForm = () => {
     const newErrors = {};
     let isValid = true;
     const missing = [];
 
     nominees.forEach((nominee, index) => {
-      // Check First Name
       if (!nominee.firstName.trim()) {
         newErrors[index] = 'First Name is required';
         missing.push(`First Name for Nominee ${nominee.id}`);
         isValid = false;
       }
-      
-      // Check Relationship
       if (!nominee.relationship.trim()) {
         newErrors[index] = 'Relationship is required';
         missing.push(`Relationship for Nominee ${nominee.id}`);
         isValid = false;
       }
-      
-      // Check Percentage Share
-      if (
-        nominee.percentageShare === '' ||
-        nominee.percentageShare === null ||
-        isNaN(nominee.percentageShare)
-      ) {
+      if (nominee.percentageShare === '' || nominee.percentageShare === null || isNaN(nominee.percentageShare)) {
         newErrors[index] = 'Percentage share is required';
         missing.push(`Percentage Share for Nominee ${nominee.id}`);
         isValid = false;
       }
-
-      // Check Guardian details for minor nominees
       if (nominee.minorNomineeFlag === 'Y') {
         if (!nominee.guardianDetails.name.trim()) {
           newErrors[index] = 'Guardian name is required for minor nominee';
           missing.push(`Guardian Name for Nominee ${nominee.id}`);
           isValid = false;
-        } else if (!nominee.guardianDetails.relationship) {
+        }
+        if (!nominee.guardianDetails.relationship) {
           newErrors[index] = 'Guardian relationship is required for minor nominee';
           missing.push(`Guardian Relationship for Nominee ${nominee.id}`);
           isValid = false;
@@ -166,7 +155,6 @@ export default function NomineeDetails() {
     const missing = [];
     let isValid = true;
 
-    // Validate required fields first
     nominees.forEach((nominee, index) => {
       if (!nominee.firstName.trim()) {
         missing.push(`First Name for Nominee ${nominee.id}`);
@@ -205,9 +193,7 @@ export default function NomineeDetails() {
     }
 
     if (validateForm()) {
-      // Save to localStorage
       localStorage.setItem('nomineeDetails', JSON.stringify(nominees));
-      // Navigate to upload documents
       navigate('/upload-documents');
     }
   };
@@ -219,8 +205,8 @@ export default function NomineeDetails() {
   const totalShare = calculateTotalShare();
 
   return (
-    <>
-      <div className="nominee-container">
+  <div className="nominee-page">         
+    <div className="nominee-container">
         <div className="form-container">
           <h3>Nominee Details</h3>
 
@@ -359,26 +345,28 @@ export default function NomineeDetails() {
             </div>
 
             <div className="footer-sticky">
-              <div className="footer-content">
-                <button className="back-btn" onClick={handleBack}>&lt; Back</button>
-                <div className="footer-right">
-                  <div className="share-validation">
-                    <p className={totalShare === 100 ? 'valid' : 'invalid'}>
-                      Total share: <strong>{totalShare}%</strong> (must be 100%)
-                    </p>
-                    {errors.share && <div className="error-message">{errors.share}</div>}
-                  </div>
+  <div className="footer-content-inline">
+    <button className="back-btn" onClick={handleBack}>
+      &lt; Back
+    </button>
 
-                  <button className="next-btn" onClick={handleNext}>
-                    Next: Upload Documents
-                  </button>
-                </div>
-              </div>
-            </div>
+    <div className="share-validation-inline">
+      <p className={totalShare === 100 ? 'valid' : 'invalid'}>
+        Total share: <strong>{totalShare}%</strong> (must be 100%)
+      </p>
+      {errors.share && <div className="error-message">{errors.share}</div>}
+    </div>
+
+    <button className="next-btn" onClick={handleNext}>
+      Next: Upload Documents
+    </button>
+  </div>
+</div>
           </div>
         </div>
       </div>
 
+      {/* Popups */}
       {showMaxPopup && (
         <div className="modal-overlay" onClick={() => setShowMaxPopup(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -416,6 +404,6 @@ export default function NomineeDetails() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

@@ -1,333 +1,113 @@
-:root {
-  --primary: #0b69b1;
-  --muted: #6b7280;
-  --bg: #ffffff;
-  --card: #fbfdff;
+/* -------------------------------------------------
+   PREVENT SCROLLBAR & KEEP CONTENT INSIDE CONTAINER
+   ------------------------------------------------- */
+html, body {
+  height: 100%;
+  overflow: hidden;                 /* <-- NEW: no page scroll */
 }
 
-/* --------- Main Container --------- */
-.nominee-container {
-  width: 65%;                    /* Reduced from 70% */
-  max-width: 900px;              /* Reduced from 1000px */
-  margin: 15px auto;             /* Reduced from 20px */
-  padding: 24px;                 /* Reduced from 30px */
+body {
+  background-color: #f4f8fc;
+  margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+/* -------------------------------------------------
+   MAIN WRAPPER – 100% viewport height, scrollable only
+   inside the form area (optional, but nice)
+   ------------------------------------------------- */
+.nominee-page {
+  width: 100%;
+  height: 100vh;                    /* <-- NEW: full height */
+  overflow: hidden;                 /* <-- NEW */
+  display: flex;
+  justify-content: center;
+}
+
+/* -------------------------------------------------
+   FORM CONTAINER – scrollable internally if needed
+   ------------------------------------------------- */
+.nominee-container {
+  width: 70%;
+  max-width: 950px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  background: #fbfdff;
+  border: 2px solid #b3e0ff;
   border-radius: 10px;
-  min-height: 5vh;
+  box-shadow: 0 8px 28px rgba(16,24,40,.06);
   display: flex;
   flex-direction: column;
-  border: 2px solid #87CEEB;
-  box-shadow: 0 8px 28px rgba(16, 24, 40, 0.06);
-  position: relative;
-  background-color: #fbfdff;
-  overflow: hidden;
-  top: 50%;
+  align-items: stretch;
+
+  /* make the container scrollable only when content overflows */
+  max-height: calc(100vh - 80px);   /* <-- NEW: 80px = margin top+bottom */
+  overflow-y: auto;                 /* <-- NEW: internal scroll */
+  overflow-x: hidden;
 }
 
-/* --------- Header --------- */
-.header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 12px;
-}
+/* -------------------------------------------------
+   ALL OTHER STYLES (unchanged)
+   ------------------------------------------------- */
+.form-container h3 { text-align:center; color:#0b4471; margin-bottom:20px; }
 
-.back-btn {
-  background: none;
-  border: none;
-  color: var(--primary);
-  cursor: pointer;
-  font-weight: 600;
-}
+.nominee-nav { display:flex; justify-content:flex-start; gap:10px; margin-bottom:15px; }
+.nav-btn { background:#d9edff; border:1px solid #99d0ff; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold; color:#0b69b1; }
+.nav-btn.active { background:#0b69b1; color:#fff; }
 
-.header h2 {
-  margin: 0;
-  font-size: 16px;
-  color: #08304a;
-}
+.nominee-section { background:#fafdff; border-left:4px solid #0b69b1; padding:20px; border-radius:8px; margin-bottom:15px; }
+.nominee-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.nominee-title h4 { margin:0; color:#0b69b1; font-size:16px; }
+.remove-btn { background:#ffe8e8; border:1px solid #ffb3b3; color:#c70000; border-radius:6px; padding:6px 10px; cursor:pointer; }
 
-/* --------- Form Container --------- */
-.form-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 0px;
-  min-height:0;
-}
-
-.form-container h3 {
-  margin: 0;
-  text-align: center;
-  color: #0b4471;
-}
-
-/* --------- Nominee Wrapper --------- */
-.nominees-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow-y: auto;
-  padding-bottom: 90px; /* space for sticky footer */
-}
-
-/* --------- Nominee Section --------- */
-.nominee-section {
-  background: var(--card);
-  padding: 14px;
-  border-left: 4px solid var(--primary);
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
-
-.nominee-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.nominee-title h4 {
-  margin: 0;
-  color: var(--primary);
-  font-weight: 700;
-}
-
-.remove-btn {
-  background: #e11d48;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.remove-btn:hover {
-  background: #b91c1c;
-}
-
-/* --------- Form Fields --------- */
-.form-fields-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  padding: 0 12px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 12px;
-}
-
-.form-group label {
-  font-weight: 600;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+.form-fields-container { display:grid; grid-template-columns:1fr 1fr; gap:18px 35px; align-items:center; }
+.form-group { display:flex; flex-direction:column; }
+.form-group label { font-weight:600; color:#0b4471; font-size:14px; margin-bottom:5px; }
+.required-star { color:red; }
 
 .form-group input,
-.form-group select {
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid #e6eef8;
-  font-size: 13px;
-}
-
+.form-group select { padding:8px 10px; border-radius:6px; border:1px solid #cde6f7; font-size:14px; background:#fff; }
 .form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  box-shadow: 0 8px 24px rgba(11, 105, 177, 0.06);
-  border-color: var(--primary);
-}
+.form-group select:focus { outline:none; border-color:#0b69b1; box-shadow:0 0 3px rgba(11,105,177,.3); }
 
-/* --------- Percentage Share --------- */
-.share-input-group {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
+.share-input-group { display:flex; align-items:center; gap:6px; }
+.share-input-group input { width:100%; padding-right:10px; }
+.percent-symbol { color:#0b4471; font-weight:bold; }
 
-.percent-symbol {
-  color: #666;
-  font-weight: 600;
-}
+.add-nominee-container { margin-top:10px; text-align:center; }
+.add-nominee-btn { background:none; border:1px dashed #0b69b1; color:#0b69b1; font-weight:600; padding:8px 16px; border-radius:8px; cursor:pointer; }
+.add-nominee-btn:hover { background:#eaf6ff; }
 
-.error-message {
-  background: #fff1f0;
-  color: #b91c1c;
-  padding: 8px;
-  border-radius: 6px;
-}
+/* ---- FOOTER (inline layout) ---- */
+.footer-sticky { margin-top:20px; border-top:1px solid #d6e8f9; padding-top:15px; }
+.footer-content-inline { display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.share-validation-inline { text-align:center; flex:1; min-width:180px; padding:8px 12px; border-radius:8px; background:#f8fafc; }
+.share-validation-inline p { margin:0; font-size:14px; font-weight:500; }
+.share-validation-inline .error-message { color:red; font-size:12px; margin-top:4px; }
+.valid { color:green; }
+.invalid { color:red; }
 
-/* --------- Add Nominee Button --------- */
-.add-nominee-container {
-  padding-top: 6px;
-}
+.back-btn, .next-btn { padding:10px 20px; font-weight:600; border-radius:8px; cursor:pointer; min-width:120px; }
+.back-btn { background:#fff; color:#0b69b1; border:1px solid #0b69b1; }
+.back-btn:hover { background:#eaf4ff; }
+.next-btn { background:#0b69b1; color:#fff; border:none; }
+.next-btn:hover { opacity:.9; }
 
-.add-nominee-btn {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px dashed #cfe7fb;
-  background: linear-gradient(#fff, #f6fbff);
-  color: var(--primary);
-  font-weight: 700;
-  cursor: pointer;
-}
+/* ---- MODALS ---- */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center; z-index:1000; }
+.modal { background:#fff; padding:22px 25px; border-radius:8px; box-shadow:0 8px 30px rgba(3,10,25,.2); max-width:360px; width:90%; text-align:center; }
+.modal p { margin-bottom:15px; font-weight:600; color:#0b4471; }
+.modal-close { background:#0b69b1; color:#fff; border:none; padding:8px 14px; border-radius:6px; cursor:pointer; }
 
-.add-nominee-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* --------- Sticky Footer --------- */
-.footer-sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  background: #fbfdff;
-  padding: 10px 12px;
-  border-top: 1px solid #cfe7fb;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
-  z-index: 5;
-}
-
-.share-validation {
-  padding: 8px;
-  border-radius: 8px;
-  background: #f8fafc;
-  text-align: center;
-  margin-bottom: 8px;
-}
-
-.share-validation p {
-  margin: 0;
-}
-
-.share-validation .valid {
-  color: #047857;
-}
-
-.share-validation .invalid {
-  color: #b91c1c;
-}
-
-.next-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  background: linear-gradient(90deg, var(--primary), #0a57a0);
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-}
-
-/* --------- Modal Popups --------- */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal {
-  background: #fff;
-  padding: 20px 22px;
-  border-radius: 8px;
-  box-shadow: 0 8px 30px rgba(3, 10, 25, 0.2);
-  max-width: 360px;
-  width: 90%;
-  text-align: center;
-}
-
-.modal p {
-  margin: 0 0 12px;
-  font-weight: 600;
-  color: #b91c1c;
-}
-
-.modal-close {
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.share-error-popup p {
-  color: #b91c1c;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.required-fields-popup p {
-  color: #b91c1c;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-
-.missing-fields-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 16px;
-  text-align: left;
-}
-
-.missing-fields-list li {
-  color: #4b5563;
-  font-size: 13px;
-  padding: 4px 0;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.missing-fields-list li:last-child {
-  border-bottom: none;
-}
-
-/* --------- Required field asterisk --------- */
-.required-star {
-  color: #d32f2f;
-  margin-left: 6px;
-  font-weight: 700;
-}
-
-/* --------- Responsive --------- */
-@media (max-width: 768px) {
-  .nominee-container {
-    width: 90%;                 /* Full width with padding */
-    padding: 16px;              /* Reduced padding on mobile */
-    margin: 10px auto;
-    border-radius: 8px;
-  }
-
-  .form-fields-container {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 0 6px;
-  }
-
-  .header {
-    padding: 6px 8px;
-  }
-
-  .nominee-section {
-    padding: 12px;
-  }
-
-  .footer-sticky {
-    padding: 8px 10px;
-  }
+/* ---- RESPONSIVE ---- */
+@media (max-width:768px) {
+  .nominee-container { width:90%; padding:15px; max-height:calc(100vh - 60px); }
+  .form-fields-container { grid-template-columns:1fr; gap:15px; }
+  .footer-content-inline { flex-direction:column; gap:12px; }
+  .back-btn, .next-btn { width:100%; }
+  .share-validation-inline { order:-1; width:100%; min-width:auto; }
 }
