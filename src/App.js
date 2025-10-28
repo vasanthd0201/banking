@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PersonalDetails from "./auth/PersonalDetails";
+import ContactDetails from "./auth/ContactDetails";
+import BankTaxDetails from "./auth/BankTaxDetails";
+import SchemeSelection from "./auth/SchemeSelection";
+import NomineeDetails from "./auth/NomineeDetails";
+import UploadDocuments from "./auth/UploadDocuments";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* Redirect root ("/") to /register */}
+        <Route path="/" element={<PersonalDetails/>} />
+        <Route path="/personal-details" element={<PersonalDetails />} />
+        <Route path="/contact-details" element={<ContactDetails />} />
+        <Route path="/bank-tax-details" element={<BankTaxDetails />} />
+        <Route path="/scheme-selection" element={<SchemeSelection />} />
+        <Route path="/nominee-details" element={<NomineeDetails />} />
+        <Route path="/upload-documents" element={<UploadDocuments />} />
+      </Routes>
+    </Router>
   );
 }
 
