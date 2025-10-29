@@ -12,17 +12,15 @@
 
 .screen4-container {
   width: 100%;
-  max-width: 860px;
-  min-height: 450px;
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 18px 45px rgba(15, 31, 64, 0.08);
   padding: 32px 36px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  margin-left: 270px;
-  margin-top: 30px;
+  gap: 32px;
+  margin-right: 170px;
+ margin-top: 30px;
 }
 
 .screen4-step {
